@@ -1,0 +1,6 @@
+export const prefix = 'SIGNUP_'
+export const SIGNUP_LOADING = prefix + 'LOADING'
+export const SIGNUP_CHANGE_EMAIL = prefix + 'CHANGE_EMAIL'
+export const SIGNUP_CHANGE_PASSWORD = prefix + 'CHANGE_PASSWORD'
+export const SIGNUP_REQUEST_SIGNUP = prefix + 'REQUEST_SIGNUP'
+export const SIGNUP_SET_ERROR = prefix + 'SET_ERROR'
