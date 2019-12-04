@@ -6,20 +6,27 @@ import Base from './Base/Base'
 import Auth from './Auth/Auth'
 import Toast from './Toast/Toast'
 
-const mapStateToProps = () => ({})
+const mapStateToProps = (state) => ({
+  loading: state.authentication.loading,
+})
 
 const mapDispatchToProps = () => ({})
 
-const Navigation = () => {
+const Navigation = ({
+  loading
+}) => {
+
+  const showLoading = loading ? 'loading' : false
+
   return (
     <React.Fragment>
       <Toast />
+      {showLoading}
       <Switch>
         <Route path='/login' component={Base} />
         <Route path='/signup' component={Base} />
         <Route path='/' component={Auth} />
       </Switch>
-      Navigation
     </React.Fragment>
   )
 }

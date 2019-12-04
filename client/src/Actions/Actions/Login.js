@@ -1,6 +1,6 @@
 import * as ActionType from '../Constants/Login'
 
-export const loading = (loading) => ({
+export const loadingLogin = (loading) => ({
   type: ActionType.LOGIN_LOADING,
   payload: { loading }
 })

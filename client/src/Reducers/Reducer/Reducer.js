@@ -8,6 +8,8 @@ import toastReducer from '../Toast'
 import loginReducer from '../Login'
 import signupReducer from '../Signup'
 
+import authenticationReducer from '../Authentication'
+
 export default (history) => combineReducers({
   session: sessionReducer,
   status: statusReducer,
@@ -15,6 +17,8 @@ export default (history) => combineReducers({
 
   login: loginReducer,
   signup: signupReducer,
+
+  authentication: authenticationReducer,
 
   // The key must be router
   router: connectRouter(history)

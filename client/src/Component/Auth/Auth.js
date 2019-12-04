@@ -2,8 +2,7 @@ import React, { useEffect } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import { requestAuth } from '../../Actions/Actions/Session'
-import { requestStatus } from '../../Actions/Actions/Status'
+import { requestAuth } from '../../Actions/Actions/Authentication'
 
 import Home from './Home/Home'
 
@@ -17,12 +16,11 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 const Auth = ({
-  requestAuth, requestStatus
+  requestAuth
 }) => {
 
   useEffect(() => {
-    // requestAuth()
-    // requestStatus()
+    requestAuth()
   }, [])
 
   return (

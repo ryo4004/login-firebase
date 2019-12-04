@@ -5,9 +5,10 @@ import { connect } from 'react-redux'
 import {
   changeEmail,
   changePassword,
-  requestLogin,
   setError
 } from '../../../Actions/Actions/Login'
+
+import { requestLogin } from '../../../Actions/Actions/Authentication'
 
 import './Login.css'
 
@@ -34,6 +35,10 @@ const Login = ({
     setError(false)
     return () => setError(false)
   }, [])
+
+  const keyPress = (e) => {
+    if (e.which === 13) requestLogin()
+  }
 
   const showError = () => {
     if (!err) return false
@@ -69,9 +74,9 @@ const Login = ({
   return (
     <div className='login'>
       <div>
-        <h2>ログイン</h2>
-        <input type='text' value={email} onChange={(e) => changeEmail(e.target.value)} placeholder='Email' />
-        <input type='password' value={password} onChange={(e) => changePassword(e.target.value)} placeholder='Password' />
+        <h2>Login</h2>
+        <input type='text' value={email} onChange={(e) => changeEmail(e.target.value)} onKeyPress={(e) => keyPress(e)} placeholder='Email' />
+        <input type='password' value={password} onChange={(e) => changePassword(e.target.value)} onKeyPress={(e) => keyPress(e)} placeholder='Password' />
         {showError()}
         <button onClick={() => requestLogin()} onTouchStart={() => {}}>{buttonLabel}</button>
         <div className='add-account'><Link to='/signup'>Create Account</Link></div>
