@@ -51,17 +51,17 @@ const Signup = ({
         message = '入力を確認してください'
         break
       // Server Error
-      case 'blankEmail':
-        message = 'ユーザ名が入力されていません'
+      case 'auth/invalid-email':
+        message = 'メールアドレスの形式が合っていません'
         break
-      case 'blankPassword':
-        message = 'パスワードが入力されていません'
+      case 'auth/email-already-in-use':
+        message = 'メールアドレスはすでに使用されています'
         break
-      case 'alreadySignuped':
-        message = '指定されたユーザ名は使えません'
+      case 'auth/user-not-found':
+        message = 'ユーザーが見つかりません'
         break
-      case 'DBError':
-        message = 'データベースエラー'
+      case 'auth/weak-password':
+        message = 'パスワードが弱すぎます'
         break
       default:
         message = 'error: ' + err.code

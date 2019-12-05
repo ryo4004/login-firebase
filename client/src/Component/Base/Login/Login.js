@@ -42,27 +42,23 @@ const Login = ({
   const showError = () => {
     if (!err) return false
     let message
-    console.log(err)
     switch (err.code) {
       // Local Error
       case 'blankTextbox':
         message = '入力を確認してください'
         break
       // Server Error
-      case 'userNotFound':
-        message = 'ユーザが見つかりません'
+      case 'auth/invalid-email':
+        message = 'メールアドレスの形式が合っていません'
         break
-      case 'passwordWrong':
-        message = 'パスワードが間違っています'
+      case 'auth/user-not-found':
+        message = 'ユーザーが見つかりません'
         break
-      case 'updateUserNotFound':
-        message = 'データアップデートエラー'
-        break
-      case 'updateUserError':
-        message = 'データベースエラー'
+      case 'auth/wrong-password':
+        message = 'ユーザーが見つかりません'
         break
       default:
-        message = 'error: ' + err.type
+        message = 'error: ' + err.code
     }
     return (
       <div className='err'>{message}</div>
