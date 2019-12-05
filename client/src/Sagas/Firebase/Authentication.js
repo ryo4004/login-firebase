@@ -1,4 +1,4 @@
-import firebase from '../../firebase'
+import firebase from '../../Library/Firebase/firebase'
 
 export const getToken = (user) => {
   console.log('token')
