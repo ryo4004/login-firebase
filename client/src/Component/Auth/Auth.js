@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import { requestAuth } from '../../Actions/Actions/Authentication'
+import { requestAuthentication } from '../../Actions/Actions/Session'
 
 import Home from './Home/Home'
 
@@ -11,16 +11,15 @@ import './Auth.css'
 const mapStateToProps = () => ({})
 
 const mapDispatchToProps = (dispatch) => ({
-  requestAuth: () => dispatch(requestAuth()),
-  requestStatus: () => dispatch(requestStatus())
+  requestAuthentication: () => dispatch(requestAuthentication())
 })
 
 const Auth = ({
-  requestAuth
+  requestAuthentication
 }) => {
 
   useEffect(() => {
-    requestAuth()
+    requestAuthentication()
   }, [])
 
   return (

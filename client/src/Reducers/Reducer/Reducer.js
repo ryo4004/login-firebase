@@ -3,14 +3,14 @@ import { connectRouter } from 'connected-react-router'
 
 import loginReducer from '../Login'
 import signupReducer from '../Signup'
-import authenticationReducer from '../Authentication'
+import sessionReducer from '../Session'
 
 import toastReducer from '../Toast'
 
 export default (history) => combineReducers({
   login: loginReducer,
   signup: signupReducer,
-  authentication: authenticationReducer,
+  session: sessionReducer,
 
   toast: toastReducer,
 

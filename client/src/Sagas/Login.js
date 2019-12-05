@@ -2,7 +2,7 @@ import { call, put, takeLatest, select } from 'redux-saga/effects'
 import { replace } from 'connected-react-router'
 
 import * as ActionType from '../Actions/Constants/Login'
-import { setUser } from '../Actions/Actions/Authentication'
+import { setUser } from '../Actions/Actions/Session'
 import { loadingLogin, changeEmail, changePassword, setError } from '../Actions/Actions/Login'
 import { showToast } from '../Actions/Actions/Toast'
 

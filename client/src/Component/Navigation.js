@@ -7,7 +7,7 @@ import Auth from './Auth/Auth'
 import Toast from './Toast/Toast'
 
 const mapStateToProps = (state) => ({
-  loading: state.authentication.loading,
+  loading: state.session.loading,
 })
 
 const mapDispatchToProps = () => ({})

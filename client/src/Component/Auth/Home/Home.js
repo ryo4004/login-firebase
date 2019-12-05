@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import { requestLogout } from '../../../Actions/Actions/Authentication'
+import { requestLogout } from '../../../Actions/Actions/Session'
 
 import './Home.css'
 
