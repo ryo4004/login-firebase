@@ -3,7 +3,7 @@ import { replace } from 'connected-react-router'
 
 import * as ActionType from '../Actions/Constants/Authentication'
 import { setUser, setError } from '../Actions/Actions/Authentication'
-import { loadingSignup } from '../Actions/Actions/Signup'
+import { loadingSignup, changeEmail, changePassword } from '../Actions/Actions/Signup'
 import { showToast } from '../Actions/Actions/Toast'
 
 import { signup, getToken } from './Firebase/Authentication'
@@ -13,12 +13,14 @@ function* runRequestSignup () {
   const state = yield select()
   if (!state.signup.email || !state.signup.password) return yield put(setError({type: 'blankTextbox'}))
   yield put(loadingSignup(true))
-  const signupResponse = yield call(() => signup(state.signup.email, state.signup.password))
-  const idToken = yield call(() => getToken(signupResponse.response.user))
+  const signupResult = yield call(() => signup(state.signup.email, state.signup.password))
+  const idToken = signupResult.response ? yield call(() => getToken(signupResult.response.user)) : false
   yield put(loadingSignup(false))
-  console.log('result', {signupResponse, idToken})
-  if (signupResponse.response.user) {
-    yield put(setUser(signupResponse.response.user))
+  console.log('result', {signupResult, idToken})
+  if (signupResult.response) {
+    yield put(setUser(signupResult.response.user))
+    yield put(changeEmail(''))
+    yield put(changePassword(''))
     yield put(replace('/home'))
     yield put(showToast('登録しました'))
   } else {

@@ -1,6 +1,7 @@
 import firebase from '../../firebase'
 
 export const getToken = (user) => {
+  console.log('token')
   if (!user) return
   return new Promise((resolve) => {
     if (!user) resolve(false)
