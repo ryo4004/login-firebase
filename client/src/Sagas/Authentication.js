@@ -3,9 +3,10 @@ import { replace } from 'connected-react-router'
 import firebase from '../firebase'
 
 import * as ActionType from '../Actions/Constants/Authentication'
-import { loadingAuthentication, setId, setUser, setError } from '../Actions/Actions/Authentication'
+import { loadingAuthentication, setUser, setError } from '../Actions/Actions/Authentication'
 import { loadingLogin } from '../Actions/Actions/Login'
 import { loadingSignup } from '../Actions/Actions/Signup'
+import { showToast } from '../Actions/Actions/Toast'
 
 const getToken = (user) => {
   if (!user) return
@@ -25,10 +26,10 @@ const signup = (email, password) => {
   return new Promise((resolve) => {
     firebase.auth().createUserWithEmailAndPassword(email, password).then((response) => {
       console.log(response)
-      resolve(response.user)
-    }).catch((err) => {
-      console.warn(err)
-      resolve(err)
+      resolve({response})
+    }).catch((error) => {
+      console.warn(error)
+      resolve({error})
     })
   })
 }
@@ -37,10 +38,10 @@ const login = (email, password) => {
   return new Promise((resolve) => {
     firebase.auth().signInWithEmailAndPassword(email, password).then((response) => {
       console.log(response)
-      resolve(response.user)
-    }).catch((err) => {
-      console.warn(err)
-      resolve(err)
+      resolve({response})
+    }).catch((error) => {
+      console.warn(error)
+      resolve({error})
     })
   })
 }
@@ -67,12 +68,17 @@ function* runRequestSignup () {
   const state = yield select()
   if (!state.signup.email || !state.signup.password) return yield put(setError({type: 'blankTextbox'}))
   yield put(loadingSignup(true))
-  const user = yield call(() => signup(state.signup.email, state.signup.password))
-  const idToken = yield call(() => getToken(user))
+  const signupResponse = yield call(() => signup(state.signup.email, state.signup.password))
+  const idToken = yield call(() => getToken(signupResponse.response.user))
   yield put(loadingSignup(false))
-  yield put(setUser(user))
-  console.log('result', {user, idToken})
-  yield put(user && replace('/home'))
+  console.log('result', {signupResponse, idToken})
+  if (signupResponse.response.user) {
+    yield put(setUser(signupResponse.response.user))
+    yield put(replace('/home'))
+    yield put(showToast('ログインしました'))
+  } else {
+    yield put(setUser(false))
+  }
 }
 
 function* runRequestLogin () {
@@ -80,21 +86,27 @@ function* runRequestLogin () {
   const state = yield select()
   if (!state.login.email || !state.login.password) return yield put(setError({type: 'blankTextbox'}))
   yield put(loadingLogin(true))
-  const user = yield call(() => login(state.login.email, state.login.password))
-  const idToken = yield call(() => getToken(user))
+  const loginResult = yield call(() => login(state.login.email, state.login.password))
+  const idToken = yield call(() => getToken(loginResult.response.user))
   yield put(loadingLogin(false))
-  yield put(setUser(user))
-  console.log('result', {user, idToken})
-  yield put(user && replace('/home'))
+  console.log('result', {loginResult, idToken})
+  if (loginResult.response.user) {
+    yield put(setUser(loginResult.response.user))
+    yield put(replace('/home'))
+    yield put(showToast('ログインしました'))
+  } else {
+    yield put(setUser(false))
+  }
 }
 
 function* runRequestLogout () {
   console.log('runRequestLogout')
   yield put(loadingAuthentication(true))
-  const user = yield call(() => logout())
+  const response = yield call(() => logout())
   yield put(loadingAuthentication(false))
-  console.log('result', {user})
+  console.log('result', {response})
   yield put(replace('/login'))
+  yield put(showToast('ログアウトしました'))
 }
 
 export default function* watchRequest () {

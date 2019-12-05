@@ -1,5 +1,0 @@
-export const prefix = 'STATUS_'
-export const STATUS_LOADING = prefix + 'LOADING'
-export const STATUS_REQUEST_STATUS = prefix + 'REQUEST_STATUS'
-export const STATUS_SET_STATUS = prefix + 'SET_STATUS'
-export const STATUS_SET_ERROR = prefix + 'SET_ERROR'

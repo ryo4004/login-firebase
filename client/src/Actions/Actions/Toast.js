@@ -7,16 +7,12 @@ export const showToast = (message) => ({
 
 export const show = () => ({
   type: ActionType.TOAST_SHOW,
-  payload: {
-    status: true
-  }
+  payload: { status: true }
 })
 
 export const hide = () => ({
   type: ActionType.TOAST_HIDE,
-  payload: {
-    hide: true
-  }
+  payload: { hide: true }
 })
 
 export const end = () => ({
