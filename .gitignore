@@ -3,3 +3,6 @@
 # production
 *.css
 bundle.js*
+
+# firebase config
+/client/src/Library/Firebase/config.js
