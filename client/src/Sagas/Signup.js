@@ -1,9 +1,9 @@
 import { call, put, takeLatest, select } from 'redux-saga/effects'
 import { replace } from 'connected-react-router'
 
-import * as ActionType from '../Actions/Constants/Authentication'
-import { setUser, setError } from '../Actions/Actions/Authentication'
-import { loadingSignup, changeEmail, changePassword } from '../Actions/Actions/Signup'
+import * as ActionType from '../Actions/Constants/Signup'
+import { setUser } from '../Actions/Actions/Authentication'
+import { loadingSignup, changeEmail, changePassword, setError } from '../Actions/Actions/Signup'
 import { showToast } from '../Actions/Actions/Toast'
 
 import { signup, getToken } from './Firebase/Authentication'
@@ -11,7 +11,7 @@ import { signup, getToken } from './Firebase/Authentication'
 function* runRequestSignup () {
   console.log('runRequestSignup')
   const state = yield select()
-  if (!state.signup.email || !state.signup.password) return yield put(setError({type: 'blankTextbox'}))
+  if (!state.signup.email || !state.signup.password) return yield put(setError({code: 'blankTextbox'}))
   yield put(loadingSignup(true))
   const signupResult = yield call(() => signup(state.signup.email, state.signup.password))
   const idToken = signupResult.response ? yield call(() => getToken(signupResult.response.user)) : false
@@ -25,9 +25,10 @@ function* runRequestSignup () {
     yield put(showToast('登録しました'))
   } else {
     yield put(setUser(false))
+    yield put(setError({code: signupResult.error.code, message: signupResult.error.message}))
   }
 }
 
 export default function* watchRequest () {
-  yield takeLatest(ActionType.AUTHENTICATION_REQUEST_SIGNUP, runRequestSignup)
+  yield takeLatest(ActionType.SIGNUP_REQUEST_SIGNUP, runRequestSignup)
 }

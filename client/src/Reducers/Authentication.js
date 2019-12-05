@@ -7,7 +7,7 @@ const initialState = {
   err: false
 }
 
-export default function loginReducer (state = initialState, action) {
+export default function authenticationReducer (state = initialState, action) {
   switch (action.type) {
     case ActionType.AUTHENTICATION_LOADING:
       return {

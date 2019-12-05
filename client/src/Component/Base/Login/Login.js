@@ -5,10 +5,9 @@ import { connect } from 'react-redux'
 import {
   changeEmail,
   changePassword,
+  requestLogin,
   setError
 } from '../../../Actions/Actions/Login'
-
-import { requestLogin } from '../../../Actions/Actions/Authentication'
 
 import './Login.css'
 
@@ -43,7 +42,8 @@ const Login = ({
   const showError = () => {
     if (!err) return false
     let message
-    switch (err.type) {
+    console.log(err)
+    switch (err.code) {
       // Local Error
       case 'blankTextbox':
         message = '入力を確認してください'

@@ -1,9 +1,9 @@
 import { call, put, takeLatest, select } from 'redux-saga/effects'
 import { replace } from 'connected-react-router'
 
-import * as ActionType from '../Actions/Constants/Authentication'
-import { setUser, setError } from '../Actions/Actions/Authentication'
-import { loadingLogin, changeEmail, changePassword } from '../Actions/Actions/Login'
+import * as ActionType from '../Actions/Constants/Login'
+import { setUser } from '../Actions/Actions/Authentication'
+import { loadingLogin, changeEmail, changePassword, setError } from '../Actions/Actions/Login'
 import { showToast } from '../Actions/Actions/Toast'
 
 import { login, getToken } from './Firebase/Authentication'
@@ -11,7 +11,7 @@ import { login, getToken } from './Firebase/Authentication'
 function* runRequestLogin () {
   console.log('runRequestLogin')
   const state = yield select()
-  if (!state.login.email || !state.login.password) return yield put(setError({type: 'blankTextbox'}))
+  if (!state.login.email || !state.login.password) return yield put(setError({code: 'blankTextbox'}))
   yield put(loadingLogin(true))
   const loginResult = yield call(() => login(state.login.email, state.login.password))
   const idToken = loginResult.response ? yield call(() => getToken(loginResult.response.user)) : false
@@ -25,9 +25,10 @@ function* runRequestLogin () {
     yield put(showToast('ログインしました'))
   } else {
     yield put(setUser(false))
+    yield put(setError({code: loginResult.error.code, message: loginResult.error.message}))
   }
 }
 
 export default function* watchRequest () {
-  yield takeLatest(ActionType.AUTHENTICATION_REQUEST_LOGIN, runRequestLogin)
+  yield takeLatest(ActionType.LOGIN_REQUEST_LOGIN, runRequestLogin)
 }

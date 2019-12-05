@@ -9,14 +9,6 @@ export const requestAuth = () => ({
   type: ActionType.AUTHENTICATION_REQUEST_AUTHENTICATION
 })
 
-export const requestSignup = () => ({
-  type: ActionType.AUTHENTICATION_REQUEST_SIGNUP
-})
-
-export const requestLogin = () => ({
-  type: ActionType.AUTHENTICATION_REQUEST_LOGIN
-})
-
 export const requestLogout = () => ({
   type: ActionType.AUTHENTICATION_REQUEST_LOGOUT
 })

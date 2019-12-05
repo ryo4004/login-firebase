@@ -5,10 +5,9 @@ import { connect } from 'react-redux'
 import {
   changeEmail,
   changePassword,
+  requestSignup,
   setError
 } from '../../../Actions/Actions/Signup'
-
-import { requestSignup } from '../../../Actions/Actions/Authentication'
 
 import './Signup.css'
 
@@ -43,7 +42,7 @@ const Signup = ({
   const showError = () => {
     if (!err) return false
     let message
-    switch (err.type) {
+    switch (err.code) {
       // Local Error
       case 'notAgreement':
         message = '利用規約およびプライバシーポリシーへの同意が必要です'
@@ -65,7 +64,7 @@ const Signup = ({
         message = 'データベースエラー'
         break
       default:
-        message = 'error: ' + err.type
+        message = 'error: ' + err.code
     }
     return (
       <div className='err'>{message}</div>
