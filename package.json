@@ -16,7 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "connected-react-router": "^6.6.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "firebase": "^7.5.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
